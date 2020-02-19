@@ -1,22 +1,31 @@
 {% extends 'base.html' %}
+{% from 'macros.html' import field_error %}
+
 {% block register %}
 <div class="register_form">
     <form action="" method="post" >
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
     Welcome to Albumy!<br>
+
     {{ form.name.label }}<br>
     {{ form.name() }}<br>
+    {{ field_error(form.name) }}
 
     Email<br>
     {{ form.email }}<br>
+        {{ field_error(form.email) }}
 
     Username<br>
     {{ form.username }}<br>
+          {{ field_error(form.username) }}
 
     Password<br>
     {{ form.password }}<br>
+      {{ field_error(form.password) }}
 
     Confirm password<br>
     {{ form.confirmpassword }}<br>
+          {{ field_error(form.confirmpassword) }}
 
     Submit<br>
     {{ form.submit }}<br>

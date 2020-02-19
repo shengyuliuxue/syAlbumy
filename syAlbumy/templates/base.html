@@ -3,11 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link type="text/css" rel="stylesheet", href="{{url_for('static', filename='albumy.css')}}">
+    {% block styles %} {% endblock %}
+
 </head>
 <body>
+    {% block content %}
+    {% endblock %}
 
     {% block register %}
     {% endblock %}
 
+    {% block scripts %}
+    {% endblock %}
 </body>
 </html>

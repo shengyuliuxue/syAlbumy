@@ -8,7 +8,7 @@ from syAlbumy.model import User
 
 class RegisterForm(Form):
     name = StringField('name', validators=[DataRequired(), Length(1, 30)])
-    email = StringField('email', validators=[DataRequired(),Email(), Length(1, 64)])
+    email = StringField('email', validators=[DataRequired(), Email(), Length(1, 64)])
     username = StringField('username', validators=[DataRequired(), Length(1, 20),
                                                    Regexp('^[0-9a-zA-Z\_]*$')])
     password = PasswordField('password', validators=[DataRequired(), Length(1, 20)])
@@ -17,11 +17,12 @@ class RegisterForm(Form):
     submit = SubmitField('submit')
 
     def validate_username(self, field):
-        if User.query.filter_by(username=field.data.lower()).first():
+        if User.query.filter_by(username=field.data).first():
             raise ValidationError('The username is in use!')
 
     def validate_email(self, field):
-        if User.query.filter_by(email=field.data).first():
+        #bug发生地方：field.data 我写成self.email
+        if User.query.filter_by(email=field.data.lower()).first():
             raise ValidationError('The email is in use!')
 
 
