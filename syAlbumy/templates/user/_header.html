@@ -1,0 +1,28 @@
+{% from 'macros.html' import photo_card %}
+
+{% extends 'base.html' %}
+{% block content %}
+<div class="user">
+
+    <div class="user_header">
+        <div class="avatar"></div>
+        <div class="userinfo">
+            <a class="profile-pop" data-href="{{ url_for('register_bp.get_profile', user_id=1) }}"
+                href="{{ url_for('register_bp.user', username='shengyu') }}">
+            {{ user.username }}
+            </a>
+        </div>
+    </div>
+
+    <div class="user_content">
+        {% if  photos %}
+            {% for photo in photos %}
+               {{ photo_card(photo) }}
+            {% endfor %}
+        {% else %}
+        <h4> no photos! </h4>
+        {% endif %}
+    </div>
+
+</div>
+{% endblock %}

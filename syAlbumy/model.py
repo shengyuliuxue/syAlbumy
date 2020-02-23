@@ -11,8 +11,8 @@ from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
 
-collections_table = db.Table('collections', db.Column('user_id', db.Integer, db.ForeignKey('user.id'),),
-                             db.Column('photo_id', db.Integer, db.ForeignKey('photo.id')))
+#collections_table = db.Table('collections', db.Column('user_id', db.Integer, db.ForeignKey('user.id'),),
+#                             db.Column('photo_id', db.Integer, db.ForeignKey('photo.id')))
 
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -28,16 +28,20 @@ class User(UserMixin, db.Model):
         check_password_hash(self.password_hash, password)
 
     comments = db.relationship('Comment', back_populates='user')
-    photos = db.relationship('Photo', secondary=collections_table, back_populates='users')
-
+    #photos = db.relationship('Photo', secondary=collections_table, back_populates='users')
+    photos = db.relationship('Photo', back_populates='user')
 
 class Photo(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(30))
+    filename = db.Column(db.String(128))
+    description = db.Column(db.String(500))
+    filename_s = db.Column(db.String(128))
+    filename_m = db.Column(db.String(128))
     #resource
     photo_comment = db.relationship('Comment', back_populates='photo')
-    users = db.relationship('User', secondary=collections_table, back_populates='photos')
-
+    #user = db.relationship('User', secondary=collections_table, back_populates='photos')
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    user = db.relationship('User', back_populates='photos')
 
 class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)

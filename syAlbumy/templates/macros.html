@@ -5,3 +5,10 @@
         {% endfor %}
     {% endif %}
 {% endmacro %}
+
+
+{% macro photo_card(photo) %}
+<div class="photo-card card">
+    <img class="card" src="{{ url_for('register_bp.get_image', filename=photo.filename_s) }}">
+</div>
+{% endmacro %}
